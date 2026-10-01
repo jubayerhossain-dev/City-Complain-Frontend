@@ -31,7 +31,7 @@ const Hero = () => {
                     A better neighborhood starts{' '}
                     <span
                         className="font-normal italic text-[#6b8a78]"
-                        style={{ fontFamily: "'Instrument Serif', 'Playfair Display', Georgia, serif" }}
+                        style={{ fontFamily: "'Baloo 2', sans-serif" }}
                     >
                         with you.
                     </span>
