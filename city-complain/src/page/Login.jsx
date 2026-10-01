@@ -49,7 +49,7 @@ export default function Login() {
     } catch (cause) {
       const message = cause?.message || ''
       setError(/failed to fetch|networkerror|load failed/i.test(message)
-        ? 'Cannot reach the FastAPI server. Confirm it is running at http://127.0.0.1:8000, then restart the frontend dev server.'
+        ? 'Cannot reach the API server. Check the VITE_API_BASE_URL setting in your Vercel project and confirm the Render service is running.'
         : message || 'Could not connect to the FastAPI server.')
     } finally {
       setBusy(false)

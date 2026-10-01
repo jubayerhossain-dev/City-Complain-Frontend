@@ -1,16 +1,25 @@
-# React + Vite
+# CivicDesk frontend deployment
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Vercel
 
-Currently, two official plugins are available:
+Import this frontend as a separate Vercel project and set its **Root Directory** to `city-complain` (the directory containing this `package.json`). Vercel should use the Vite defaults: build command `npm run build` and output directory `dist`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Add this environment variable in Vercel for Production (and Preview if you deploy previews):
 
-## React Compiler
+```text
+VITE_API_BASE_URL=https://YOUR-RENDER-SERVICE.onrender.com
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Replace the value with the public HTTPS URL of the Render backend. Do not add a trailing slash or `/api`; frontend requests append their endpoint paths directly. Redeploy after changing a Vite environment variable because it is embedded during the build.
 
-## Expanding the Oxlint configuration
+The Vite `/api` proxy in `vite.config.js` is only for local development and preview. It does not run in Vercel production.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Backend CORS
+
+In the separate Render backend service, set `CORS_ORIGINS` to the exact frontend origin(s), comma-separated, with no path. For example:
+
+```text
+CORS_ORIGINS=https://your-project.vercel.app,https://your-custom-domain.com
+```
+
+Add every Vercel Preview origin you intend to use. Keep the existing frontend and backend deployments separate.
